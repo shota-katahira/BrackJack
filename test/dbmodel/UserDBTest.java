@@ -3,6 +3,7 @@ package dbmodel;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterEach;
@@ -36,7 +37,7 @@ public class UserDBTest {
 
 	//getUser(id,password)テスト
 	@Test
-	public void getUserTest1() {
+	public void getUserTest1() throws SQLException {
 
 		String expectedId = user.getId();
 		String expectedPassword = user.getPassword();
@@ -93,7 +94,7 @@ public class UserDBTest {
 
 	//updateUserテスト
 	@Test
-	public void updateUserTest() {
+	public void updateUserTest() throws SQLException {
 
 		User setUser = new User();
 		setUser.setId(id);
