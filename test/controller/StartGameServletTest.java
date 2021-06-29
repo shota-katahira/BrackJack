@@ -15,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import model.Deck;
 import model.GameInf;
 import model.JudgeNaturalBJ;
 import model.Player;
@@ -47,7 +48,8 @@ public class StartGameServletTest {
 		User user = new User();
 		user.setId("id");
 		session.setAttribute("user", user);
-		Player player = new Player(0);
+		Deck deck = new Deck();
+		Player player = new Player(0, 0, deck);
 		GameInf gi = new GameInf(player, null, null);
 
 		doReturn(gi).when(gm).judge(anyObject());
