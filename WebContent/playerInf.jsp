@@ -19,22 +19,32 @@
 		</div>
 	<% } %>
 
-	<% if(hand.getResult() == null) { %>
+	<%
+		if(hand.resultIsNull()) {
+	%>
 
-		<% if(hand.getAscore() > hand.getScore()) { %>
-			<h3 class="score">スコア：<%= hand.getScore() %> or <%= hand.getAscore() %></h3>
-		<% } else {%>
-			<h3 class="score">スコア：<%= hand.getScore() %></h3>
-		<% } %>
-		<h3>ベット：<%= hand.getChip() %></h3>
+		<%
+			if(hand.getAscore() > hand.getScore()) {
+		%>
+			<h3 class="score">スコア：<%=hand.getScore()%> or <%=hand.getAscore()%></h3>
+		<%
+			} else {
+		%>
+			<h3 class="score">スコア：<%=hand.getScore()%></h3>
+		<%
+			}
+		%>
+		<h3>ベット：<%=hand.getChip()%></h3>
 
 		<form action="HitServlet" method="post">
-			<button class="hit" type='submit' name='index' value=<%= i %>>hit</button>
+			<button class="hit" type='submit' name='index' value=<%=i%>>hit</button>
 		</form>
 
-	<% } else { %>
+	<%
+		} else {
+	%>
 
-		<h1><%= hand.getResult() %></h1>
+		<h1><%=hand.getResult()%></h1>
 
 		<% if(hand.getAscore() > hand.getScore()) { %>
 			<h3 class="score">スコア：<%= hand.getAscore() %></h3>

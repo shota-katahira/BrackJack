@@ -81,6 +81,27 @@ public class Hand implements Serializable {
 		return false;
 	}
 
+	public void compareToDealer(Hand dealerHand) {
+
+		int difference = getHighScore() - dealerHand.getHighScore();
+
+		if (difference > 0 || dealerHand.getBust()) {
+			gameEndProcess(Result.WIN);
+			return;
+		}
+
+		if (difference == 0) {
+			gameEndProcess(Result.DRAW);
+			return;
+		}
+
+		if (difference < 0) {
+			gameEndProcess(Result.LOSE);
+			return;
+		}
+
+	}
+
 	public boolean comparisonHand() {
 
 		if (hand.get(0).getCardScore() == hand.get(1).getCardScore()) {
@@ -90,24 +111,31 @@ public class Hand implements Serializable {
 		return false;
 	}
 
-	public void setResult(String result) {
-		this.result = result;
+	public void gameEndProcess(Result result) {
+		this.result = result.getResult();
+		getChip = (int) (betChip * result.getCoefficient());
+
+	}
+
+	public boolean resultIsNull() {
+
+		if (result == null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getResult() {
 		return result;
 	}
 
-	public void setChip(Integer betChip) {
+	public void setChip(int betChip) {
 		this.betChip = betChip;
 	}
 
 	public int getChip() {
 		return betChip;
-	}
-
-	public void setGetChip(double coefficient) {
-		getChip = (int) (betChip * coefficient);
 	}
 
 	public int getGetChip() {

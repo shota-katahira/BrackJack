@@ -32,7 +32,7 @@ public class HitTest {
 
 		String expected = null;
 
-		String actual = gi.getPlayer().getHandList().get(0).getResult();
+		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
 
 		assertThat(actual, is(expected));
 
@@ -51,7 +51,7 @@ public class HitTest {
 
 		String expected = "Lose";
 
-		String actual = gi.getPlayer().getHandList().get(0).getResult();
+		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
 
 		assertThat(actual, is(expected));
 

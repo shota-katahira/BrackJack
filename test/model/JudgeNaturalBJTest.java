@@ -54,7 +54,7 @@ public class JudgeNaturalBJTest {
 		gi = jnbj.judge(gi);
 
 		String expected = "Draw";
-		String actual = gi.getPlayer().getHandList().get(0).getResult();
+		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
 
 		assertThat(actual, is(expected));
 
@@ -71,7 +71,7 @@ public class JudgeNaturalBJTest {
 		gi = jnbj.judge(gi);
 
 		String expected = "Lose";
-		String actual = gi.getPlayer().getHandList().get(0).getResult();
+		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
 
 		assertThat(actual, is(expected));
 
@@ -87,7 +87,7 @@ public class JudgeNaturalBJTest {
 		gi = jnbj.judge(gi);
 
 		String expected = "Win";
-		String actual = gi.getPlayer().getHandList().get(0).getResult();
+		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
 
 		assertThat(actual, is(expected));
 
@@ -103,7 +103,7 @@ public class JudgeNaturalBJTest {
 		gi = jnbj.judge(gi);
 
 		String expected = null;
-		String actual = gi.getPlayer().getHandList().get(0).getResult();
+		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
 
 		assertThat(actual, is(expected));
 

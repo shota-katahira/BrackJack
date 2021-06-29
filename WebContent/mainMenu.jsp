@@ -48,7 +48,9 @@
 			<jsp:include page="gameButton.jsp"></jsp:include>
 		</section>
 
-		<% if(split && player.getHandList().get(0).getResult() == null){ %>
+		<%
+			if(split && player.getHandList().get(0).resultIsNull()){
+		%>
 			<section>
 				<form action="SplitServlet" method="post">
 					<button class="command" name="split">split</button>

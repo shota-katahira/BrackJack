@@ -9,12 +9,11 @@ public class Hit {
 		Player player = gi.getPlayer();
 		Deck deck = gi.getDeck();
 		ArrayList<Hand> handList = player.getHandList();
-		EndProcess ep = new EndProcess();
 
 		player.draw(deck, index);
 
 		if (handList.get(index).getBust()) {
-			ep.setResult(handList.get(index), Result.getByResult("Lose"));
+			handList.get(index).gameEndProcess(Result.LOSE);
 		}
 
 		return gi;

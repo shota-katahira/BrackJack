@@ -52,7 +52,7 @@ public class StandTest {
 
 		String expected = "Win";
 
-		String actual = gi.getPlayer().getHandList().get(0).getResult();
+		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
 
 		assertThat(actual, is(expected));
 
@@ -69,7 +69,7 @@ public class StandTest {
 
 		String expected = "Win";
 
-		String actual = gi.getPlayer().getHandList().get(0).getResult();
+		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
 
 		assertThat(actual, is(expected));
 
@@ -88,7 +88,7 @@ public class StandTest {
 
 		String expected = "Draw";
 
-		String actual = gi.getPlayer().getHandList().get(0).getResult();
+		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
 
 		assertThat(actual, is(expected));
 
@@ -101,7 +101,7 @@ public class StandTest {
 
 		String expected = "Lose";
 
-		String actual = gi.getPlayer().getHandList().get(0).getResult();
+		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
 
 		assertThat(actual, is(expected));
 

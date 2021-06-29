@@ -7,16 +7,15 @@ public class JudgeNaturalBJ {
 		Player player = gi.getPlayer();
 		Dealer dealer = gi.getDealer();
 		Hand hand = player.getHandList().get(0);
-		EndProcess ep = new EndProcess();
 
 		if (dealer.getHighScore() == 21 || hand.getAscore() == 21) {
 
 			if (dealer.getHighScore() == 21 && hand.getScore() == 21) {
-				ep.setResult(hand, Result.getByResult("Draw"));
+				hand.gameEndProcess(Result.DRAW);
 			} else if (dealer.getHighScore() == 21) {
-				ep.setResult(hand, Result.getByResult("Lose"));
+				hand.gameEndProcess(Result.LOSE);
 			} else {
-				ep.setResult(hand, Result.getByResult("Win(NB)"));
+				hand.gameEndProcess(Result.NB_WIN);
 			}
 
 		}
