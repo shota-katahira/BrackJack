@@ -8,11 +8,7 @@ public class Split {
 
 		Player player = gi.getPlayer();
 
-		Card card = player.getHandList().get(0).getHand().poll();
-		Hand hand = new Hand();
-		hand.setHand(card);
-		hand.setChip(player.getHandList().get(0).getChip());
-		player.setHand(hand);
+		player.splitHand();
 		player.draw(gi.getDeck(), 0);
 		player.draw(gi.getDeck(), 1);
 

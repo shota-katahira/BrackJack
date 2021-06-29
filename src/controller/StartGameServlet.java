@@ -35,12 +35,9 @@ public class StartGameServlet extends HttpServlet {
 		session.setAttribute("split", false);
 		session.setAttribute("splitPlayer", null);
 
-		Player player = new Player(user.getChip());
-		Dealer dealer = new Dealer();
 		Deck deck = new Deck();
-
-		player.firstDraw(deck, betChip);
-		dealer.firstDraw(deck);
+		Player player = new Player(user.getChip(), betChip, deck);
+		Dealer dealer = new Dealer(deck);
 
 		GameInf gi = new GameInf(player, dealer, deck);
 
@@ -49,7 +46,7 @@ public class StartGameServlet extends HttpServlet {
 
 		session.setAttribute("gameInf", gi);
 		session.setAttribute("user", user);
-		session.setAttribute("split", player.getSplit());
+		session.setAttribute("split", player.permitSplit());
 		RequestDispatcher rd = request.getRequestDispatcher("mainMenu.jsp");
 		rd.forward(request, response);
 

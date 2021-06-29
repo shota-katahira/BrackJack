@@ -11,6 +11,10 @@ public class Hand implements Serializable {
 	private int getChip = 0;
 	private String result = null;
 
+	public Hand(int betChip) {
+		this.betChip = betChip;
+	}
+
 	public void drawBase(Deck deck) {
 
 		hand.add(deck.getDeck().poll());
@@ -137,10 +141,6 @@ public class Hand implements Serializable {
 
 	public String getResult() {
 		return result;
-	}
-
-	public void setChip(int betChip) {
-		this.betChip = betChip;
 	}
 
 	public int getChip() {
