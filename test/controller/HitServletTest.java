@@ -15,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import model.Deck;
 import model.GameInf;
 import model.Hit;
 import model.Player;
@@ -45,9 +46,10 @@ public class HitServletTest {
 		HttpSession session = request.getSession();
 		User user = new User();
 		user.setId("id");
-		Player player = new Player(0);
-		GameInf gi = new GameInf(player, null, null);
-		request.setParameter("command", "0");
+		Deck deck = new Deck();
+		Player player = new Player(0, 0, deck);
+		GameInf gi = new GameInf(player, null, deck);
+		request.setParameter("index", "0");
 		session.setAttribute("user", user);
 		session.setAttribute("gameInf", gi);
 
