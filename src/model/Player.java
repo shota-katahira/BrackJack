@@ -52,11 +52,8 @@ public class Player implements Serializable {
 		return handList;
 	}
 
-	public void calcChip(int getChip) {
-		chip += getChip;
-	}
-
-	public int getChip() {
+	public int calcChip() {
+		chip += getGetChip();
 		return chip;
 	}
 
