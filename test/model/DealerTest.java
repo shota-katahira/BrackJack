@@ -18,7 +18,6 @@ public class DealerTest {
 	public void setup() {
 
 		decks = new Deck();
-		dealer = new Dealer();
 
 		for (int i = 0; i < 4; i++) {
 
@@ -28,47 +27,23 @@ public class DealerTest {
 			}
 
 		}
-
+		decks.setDeck(deck);
+		dealer = new Dealer(decks);
 	}
 
 	@Test
 	public void drawTest() {
 
-		decks.setDeck(deck);
 		dealer.draw(decks);
 
 		String expectedSuite = "♠";
-		int expectedNumber = 4;
+		int expectedNumber = 3;
 
-		String actualSuite = dealer.getHand().getHand().get(3).getSuite();
-		int actualNumber = dealer.getHand().getHand().get(3).getNumber();
-
-		assertThat(actualSuite, is(expectedSuite));
-		assertThat(actualNumber, is(expectedNumber));
-
-	}
-
-	@Test
-	public void firstDrawTest() {
-
-		decks.setDeck(deck);
-		dealer.firstDraw(decks);
-
-		String expectedSuite = "♠";
-		int expectedNumber = 1;
-		String expectedSuite2 = "♠";
-		int expectedNumber2 = 2;
-
-		String actualSuite = dealer.getHand().getHand().get(0).getSuite();
-		int actualNumber = dealer.getHand().getHand().get(0).getNumber();
-
-		String actualSuite2 = dealer.getHand().getHand().get(1).getSuite();
-		int actualNumber2 = dealer.getHand().getHand().get(1).getNumber();
+		String actualSuite = dealer.getHand().getHand().get(2).getSuite();
+		int actualNumber = dealer.getHand().getHand().get(2).getNumber();
 
 		assertThat(actualSuite, is(expectedSuite));
 		assertThat(actualNumber, is(expectedNumber));
-		assertThat(actualSuite2, is(expectedSuite2));
-		assertThat(actualNumber2, is(expectedNumber2));
 
 	}
 
