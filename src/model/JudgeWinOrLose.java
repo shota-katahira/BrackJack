@@ -11,12 +11,8 @@ public class JudgeWinOrLose {
 		for (int i = 0; i < handList.size(); i++) {
 
 			Hand playerHand = handList.get(i);
-
-			if (playerHand.resultIsNull()) {
-
-				playerHand.compareToDealer(dealer.getHand());
-			}
-
+			Hand dealerHand = dealer.getHand();
+			playerHand.compareToDealer(dealerHand, false);
 		}
 
 	}

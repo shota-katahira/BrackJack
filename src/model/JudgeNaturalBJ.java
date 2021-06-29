@@ -10,13 +10,7 @@ public class JudgeNaturalBJ {
 
 		if (dealer.getHighScore() == 21 || hand.getAscore() == 21) {
 
-			if (dealer.getHighScore() == 21 && hand.getScore() == 21) {
-				hand.gameEndProcess(Result.DRAW);
-			} else if (dealer.getHighScore() == 21) {
-				hand.gameEndProcess(Result.LOSE);
-			} else {
-				hand.gameEndProcess(Result.NB_WIN);
-			}
+			hand.compareToDealer(dealer.getHand(), true);
 
 		}
 

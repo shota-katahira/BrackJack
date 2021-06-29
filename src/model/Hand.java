@@ -81,9 +81,18 @@ public class Hand implements Serializable {
 		return false;
 	}
 
-	public void compareToDealer(Hand dealerHand) {
+	public void compareToDealer(Hand dealerHand, boolean natural) {
 
 		int difference = getHighScore() - dealerHand.getHighScore();
+
+		if (!resultIsNull()) {
+			return;
+		}
+
+		if (difference > 0 && natural) {
+			gameEndProcess(Result.NB_WIN);
+			return;
+		}
 
 		if (difference > 0 || dealerHand.getBust()) {
 			gameEndProcess(Result.WIN);
