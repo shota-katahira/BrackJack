@@ -66,8 +66,7 @@ public class SplitServletTest {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		HttpSession session = request.getSession();
-		Player player = new Player(100);
-		player.firstDraw(decks, 0);
+		Player player = new Player(100, 1, decks);
 		GameInf gi = new GameInf(player, null, decks);
 		User user = new User();
 
