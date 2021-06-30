@@ -3,7 +3,6 @@ package model;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
-import java.lang.reflect.Method;
 import java.util.LinkedList;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,13 +12,16 @@ public class HandTest {
 
 	private Deck decks;
 	private Hand hand;
+	private Hand dealerHand;
+	private int betChip = 5;
 	private LinkedList<Card> deck = new LinkedList<Card>();
 
 	@BeforeEach
 	private void setup() {
 
 		decks = new Deck();
-		hand = new Hand();
+		hand = new Hand(betChip);
+		dealerHand = new Hand(0);
 
 		for (int i = 0; i < 4; i++) {
 
@@ -31,23 +33,6 @@ public class HandTest {
 		}
 
 		decks.setDeck(deck);
-	}
-
-	//scoreCalcテスト
-	@Test
-	public void scoreCalcTest() {
-
-		hand.drawBase(decks);
-
-		int expectedScore = 1;
-		int expectedAscore = 11;
-
-		int actualScore = hand.getScore();
-		int actualAscore = hand.getAscore();
-
-		assertThat(actualScore, is(expectedScore));
-		assertThat(actualAscore, is(expectedAscore));
-
 	}
 
 	//drawBaseテスト
@@ -67,27 +52,20 @@ public class HandTest {
 
 	}
 
-	//bustJudgeテスト
+	//judgeSplitテスト
 	@Test
-	public void bustJudgeTest() throws Exception {
+	public void judgeSplitTestTrue() {
 
-		for (int i = 0; i < 7; i++) {
-			hand.drawBase(decks);
-		}
-
-		Method method = Hand.class.getDeclaredMethod("bustJudge");
-		method.setAccessible(true);
-		method.invoke(hand);
+		hand.drawBase(decks);
+		hand.getHand().add(new Card(1, 1));
 
 		boolean expected = true;
-
-		boolean actual = hand.getBust();
+		boolean actual = hand.judgeSplit();
 
 		assertThat(actual, is(expected));
 
 	}
 
-	//judgeSplitテスト
 	@Test
 	public void judgeSplitTestFalse() {
 
@@ -103,55 +81,152 @@ public class HandTest {
 	}
 
 	@Test
-	public void judgeSplitTestTrue() {
+	public void getScoreTest() {
 
 		hand.drawBase(decks);
-		for (int i = 0; i < 12; i++) {
-			decks.getDeck().poll();
-		}
 		hand.drawBase(decks);
 
-		boolean expected = true;
-
-		boolean actual = hand.judgeSplit();
+		int expected = 3;
+		int actual = hand.getScore();
 
 		assertThat(actual, is(expected));
 
 	}
 
 	@Test
-	public void judgeSplitTestTrue10heigher() {
+	public void getAscoreTest() {
 
-		for (int i = 0; i < 10; i++) {
-			decks.getDeck().poll();
-		}
 		hand.drawBase(decks);
 		hand.drawBase(decks);
 
-		boolean expected = true;
-
-		boolean actual = hand.judgeSplit();
+		int expected = 13;
+		int actual = hand.getAscore();
 
 		assertThat(actual, is(expected));
 
 	}
 
-	//changeAscoreテスト
 	@Test
-	public void changeAscoreTest() {
+	public void getHighScoreTest() {
 
 		hand.drawBase(decks);
+		hand.drawBase(decks);
 
-		hand.changeAscore();
+		int expected = 13;
+		int actual = hand.getHighScore();
 
-		int expectedScore = 11;
-		int expectedAscore = 0;
+		assertThat(actual, is(expected));
 
-		int actualScore = hand.getScore();
-		int actualAscore = hand.getAscore();
+	}
 
-		assertThat(actualScore, is(expectedScore));
-		assertThat(actualAscore, is(expectedAscore));
+	//getBustテスト
+	@Test
+	public void getBustTest() throws Exception {
+
+		for (int i = 0; i < 7; i++) {
+			hand.drawBase(decks);
+		}
+
+		boolean expected = true;
+
+		boolean actual = hand.getBust();
+
+		assertThat(actual, is(expected));
+
+	}
+
+	@Test
+	public void compareToDealerTestThroughAndLose() {
+
+		hand.drawBase(decks);
+		for (int i = 0; i < 4; i++) {
+			dealerHand.drawBase(decks);
+		}
+
+		hand.compareToDealer(dealerHand, false);
+
+		String expected = "Lose";
+		String actual = hand.getResult();
+
+		assertThat(actual, is(expected));
+
+		hand.drawBase(decks);
+		hand.compareToDealer(dealerHand, false);
+
+		actual = hand.getResult();
+
+		assertThat(actual, is(expected));
+
+	}
+
+	@Test
+	public void compareToDealerTestNB_Win() {
+
+		hand.drawBase(decks);
+		dealerHand.drawBase(decks);
+
+		hand.compareToDealer(dealerHand, true);
+
+		String expected = "Lose";
+		String actual = hand.getResult();
+
+		assertThat(actual, is(expected));
+
+	}
+
+	@Test
+	public void compareToDealerTestWin() {
+
+		hand.drawBase(decks);
+		dealerHand.drawBase(decks);
+
+		hand.compareToDealer(dealerHand, false);
+
+		String expected = "Win";
+		String actual = hand.getResult();
+
+		assertThat(actual, is(expected));
+
+	}
+
+	@Test
+	public void compareToDealerTestDraw() {
+
+		hand.drawBase(decks);
+		dealerHand.getHand().add(new Card(1, 1));
+
+		hand.compareToDealer(dealerHand, false);
+
+		String expected = "Draw";
+		String actual = hand.getResult();
+
+		assertThat(actual, is(expected));
+
+	}
+
+	@Test
+	public void comparisonHandTestTrue() {
+
+		hand.drawBase(decks);
+		hand.getHand().add(new Card(1, 1));
+
+		boolean expected = true;
+		boolean actual = hand.comparisonHand();
+
+		assertThat(actual, is(expected));
+
+	}
+
+	@Test
+	public void comparisonHandTestFalse() {
+
+		hand.drawBase(decks);
+		hand.drawBase(decks);
+
+		boolean expected = false;
+		boolean actual = hand.comparisonHand();
+
+		assertThat(actual, is(expected));
 
 	}
 
