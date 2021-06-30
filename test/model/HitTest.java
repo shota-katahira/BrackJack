@@ -17,9 +17,9 @@ public class HitTest {
 	@BeforeEach
 	public void setup() {
 
-		player = new Player(100);
-		dealer = new Dealer();
 		deck = new Deck();
+		player = new Player(100, 1, deck);
+		dealer = new Dealer(deck);
 		gi = new GameInf(player, dealer, deck);
 		hit = new Hit();
 
@@ -32,7 +32,7 @@ public class HitTest {
 
 		String expected = null;
 
-		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
+		String actual = gi.getPlayer().getHandList().get(0).getResult();
 
 		assertThat(actual, is(expected));
 
@@ -45,13 +45,11 @@ public class HitTest {
 			player.draw(deck, 0);
 		}
 
-		player.getHandList().get(0).setChip(1);
-
 		gi = hit.doHit(gi, 0);
 
 		String expected = "Lose";
 
-		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
+		String actual = gi.getPlayer().getHandList().get(0).getResult();
 
 		assertThat(actual, is(expected));
 
