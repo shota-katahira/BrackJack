@@ -20,8 +20,8 @@ public class JudgeGameEndTest {
 	@BeforeEach
 	public void setup() {
 
-		player = new Player(100);
 		decks = new Deck();
+		player = new Player(100, 1, decks);
 		hit = new Hit();
 
 		for (int j = 2; j <= 13; j++) {
@@ -35,7 +35,6 @@ public class JudgeGameEndTest {
 		}
 
 		decks.setDeck(deck);
-		player.firstDraw(decks, 1);
 		gi = new GameInf(player, null, decks);
 		split = new Split();
 		gi = split.doSplit(gi);
