@@ -31,6 +31,8 @@ public class CreateAccountCheckTest {
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		user.setId(id);
+		user.setPassword(password);
+		user.setName(name);
 	}
 
 	@AfterEach
@@ -42,8 +44,12 @@ public class CreateAccountCheckTest {
 	@Test
 	public void passMachTest() {
 
-		boolean expected = false;
-		boolean actual = cac.check(id, password, "tes", name);
+		user.setId(id);
+		user.setPassword("testtest");
+		user.setName(name);
+
+		String expected = "アカウントを作成できませんでした";
+		String actual = cac.check(user, password);
 
 		assertThat(actual, is(expected));
 
@@ -53,8 +59,12 @@ public class CreateAccountCheckTest {
 	@Test
 	public void idVoidTest() {
 
-		boolean expected = false;
-		boolean actual = cac.check("", password, password, name);
+		user.setId("");
+		user.setPassword(password);
+		user.setName(name);
+
+		String expected = "アカウントを作成できませんでした";
+		String actual = cac.check(user, password);
 
 		assertThat(actual, is(expected));
 
@@ -64,8 +74,12 @@ public class CreateAccountCheckTest {
 	@Test
 	public void passVoidTest() {
 
-		boolean expected = false;
-		boolean actual = cac.check(id, "", "", name);
+		user.setId(id);
+		user.setPassword("");
+		user.setName(name);
+
+		String expected = "アカウントを作成できませんでした";
+		String actual = cac.check(user, password);
 
 		assertThat(actual, is(expected));
 
@@ -75,8 +89,12 @@ public class CreateAccountCheckTest {
 	@Test
 	public void nameVoidTest() {
 
-		boolean expected = false;
-		boolean actual = cac.check(id, password, password, "");
+		user.setId(id);
+		user.setPassword(password);
+		user.setName("");
+
+		String expected = "アカウントを作成できませんでした";
+		String actual = cac.check(user, password);
 
 		assertThat(actual, is(expected));
 
@@ -88,8 +106,12 @@ public class CreateAccountCheckTest {
 
 		doReturn(true).when(udb).getUser(anyString());
 
-		boolean expected = false;
-		boolean actual = cac.check(id, "pass", "pass", "name");
+		user.setId(id);
+		user.setPassword(password);
+		user.setName(name);
+
+		String expected = "アカウントを作成できませんでした";
+		String actual = cac.check(user, password);
 
 		assertThat(actual, is(expected));
 
@@ -99,8 +121,12 @@ public class CreateAccountCheckTest {
 	@Test
 	public void idCharCodeTest() {
 
-		boolean expected = false;
-		boolean actual = cac.check("あ", "pass", "pass", "name");
+		user.setId("あ");
+		user.setPassword(password);
+		user.setName(name);
+
+		String expected = "アカウントを作成できませんでした";
+		String actual = cac.check(user, password);
 
 		assertThat(actual, is(expected));
 
@@ -110,8 +136,12 @@ public class CreateAccountCheckTest {
 	@Test
 	public void passwordCharCodeTest() {
 
-		boolean expected = false;
-		boolean actual = cac.check("id", "あ", "あ", "name");
+		user.setId(id);
+		user.setPassword("あ");
+		user.setName(name);
+
+		String expected = "アカウントを作成できませんでした";
+		String actual = cac.check(user, "あ");
 
 		assertThat(actual, is(expected));
 
@@ -121,8 +151,12 @@ public class CreateAccountCheckTest {
 	@Test
 	public void createSuccessTest() {
 
-		boolean expected = true;
-		boolean actual = cac.check("id", password, password, name);
+		user.setId(id);
+		user.setPassword(password);
+		user.setName(name);
+
+		String expected = "アカウントを作成しました";
+		String actual = cac.check(user, password);
 
 		assertThat(actual, is(expected));
 

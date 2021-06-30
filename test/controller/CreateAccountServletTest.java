@@ -13,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import dbmodel.UserDB;
 import model.CreateAccountCheck;
 
 public class CreateAccountServletTest {
@@ -24,9 +23,6 @@ public class CreateAccountServletTest {
 
 	@InjectMocks
 	private CreateAccountServlet cas = new CreateAccountServlet();
-
-	@Mock
-	private UserDB udb;
 
 	@Mock
 	private CreateAccountCheck cac;
@@ -53,15 +49,14 @@ public class CreateAccountServletTest {
 		doReturn(password).when(request).getParameter("password1");
 		doReturn(password).when(request).getParameter("password2");
 		doReturn(name).when(request).getParameter("naem");
-		doReturn(true).when(cac).check(anyString(), anyString(), anyString(), anyString());
-		doNothing().when(udb).insertUser(anyObject());
-		doReturn(rd).when(request).getRequestDispatcher("login.jsp");
+		doReturn("アカウントを作成しました").when(cac).check(anyObject(), anyString());
+		doReturn(rd).when(request).getRequestDispatcher("createaccount.jsp");
 		doNothing().when(rd).forward(anyObject(), anyObject());
 
 		cas.doPost(request, response);
 
 		verify(request, times(1)).setAttribute("message", "アカウントを作成しました");
-		verify(request, times(1)).getRequestDispatcher("login.jsp");
+		verify(request, times(1)).getRequestDispatcher("createaccount.jsp");
 
 	}
 
@@ -78,8 +73,7 @@ public class CreateAccountServletTest {
 		doReturn(password).when(request).getParameter("password1");
 		doReturn(password2).when(request).getParameter("password2");
 		doReturn(name).when(request).getParameter("naem");
-		doReturn(false).when(cac).check(anyString(), anyString(), anyString(), anyString());
-		doNothing().when(udb).insertUser(anyObject());
+		doReturn("アカウントを作成できませんでした").when(cac).check(anyObject(), anyString());
 		doReturn(rd).when(request).getRequestDispatcher("createaccount.jsp");
 		doNothing().when(rd).forward(anyObject(), anyObject());
 
