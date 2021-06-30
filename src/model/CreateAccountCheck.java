@@ -11,18 +11,24 @@ public class CreateAccountCheck {
 	private static final Pattern PASS_PATTERN = Pattern.compile("^[0-9A-Za-z!-/:-@^_]{6,20}$");
 	private UserDB udb = new UserDB();
 
-	public boolean check(String id, String password1, String password2, String name) {
+	public String check(User user, String password2) {
+
+		String id = user.getId();
+		String password1 = user.getPassword();
+		String name = user.getName();
+		String match = "アカウントを作成しました";
+		String mismatch = "アカウントを作成できませんでした";
 
 		//パスワード一致判定
 		if (!password1.equals(password2)) {
-			return false;
+			return mismatch;
 		}
 
 		//空文字判定、ID重複判定
 		if (id.equals("") || password1.equals("") || name.equals("")) {
-			return false;
+			return mismatch;
 		} else if (udb.getUser(id)) {
-			return false;
+			return mismatch;
 		}
 
 		//文字コード判定
@@ -30,10 +36,11 @@ public class CreateAccountCheck {
 		Matcher m2 = PASS_PATTERN.matcher(password1);
 
 		if (m1.matches() && m2.matches()) {
-			return true;
+			udb.insertUser(user);
+			return match;
 		}
 
-		return false;
+		return mismatch;
 	}
 
 }
