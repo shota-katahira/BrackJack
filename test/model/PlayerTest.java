@@ -13,6 +13,7 @@ public class PlayerTest {
 	private Deck decks;
 	private Player player;
 	private int chip = 100;
+	private int betChip = 2;
 	private int index = 0;
 	private LinkedList<Card> deck = new LinkedList<Card>();
 
@@ -20,7 +21,6 @@ public class PlayerTest {
 	public void setup() {
 
 		decks = new Deck();
-		player = new Player(chip);
 
 		for (int i = 0; i < 4; i++) {
 
@@ -32,6 +32,7 @@ public class PlayerTest {
 		}
 
 		decks.setDeck(deck);
+		player = new Player(chip, betChip, decks);
 		player.draw(decks, index);
 
 	}
@@ -51,41 +52,82 @@ public class PlayerTest {
 
 	}
 
-	//fistDrawテスト
-	@Test
-	public void firstDrawTest() {
-
-		decks.setDeck(deck);
-		player.firstDraw(decks, 1);
-
-		String expectedSuite = "♠";
-		int expectedNumber = 1;
-		String expectedSuite2 = "♠";
-		int expectedNumber2 = 2;
-
-		String actualSuite = player.getHandList().get(index).getHand().get(0).getSuite();
-		int actualNumber = player.getHandList().get(index).getHand().get(0).getNumber();
-
-		String actualSuite2 = player.getHandList().get(index).getHand().get(1).getSuite();
-		int actualNumber2 = player.getHandList().get(index).getHand().get(1).getNumber();
-
-		assertThat(actualSuite, is(expectedSuite));
-		assertThat(actualNumber, is(expectedNumber));
-		assertThat(actualSuite2, is(expectedSuite2));
-		assertThat(actualNumber2, is(expectedNumber2));
-
-	}
-
 	//permitSplitテスト
 	@Test
 	public void permitSplitTest() {
 
 		player.draw(decks, index);
-		player.permitSplit();
 
 		boolean expected = false;
 
-		boolean actual = player.getSplit();
+		boolean actual = player.permitSplit();
+
+		assertThat(actual, is(expected));
+
+	}
+
+	@Test
+	public void permitSplitTestFalse() {
+
+		player.draw(decks, index);
+		player.getHandList().add(new Hand(chip));
+
+		boolean expected = false;
+
+		boolean actual = player.permitSplit();
+
+		assertThat(actual, is(expected));
+
+	}
+
+	@Test
+	public void splitHandTest() {
+
+		player.splitHand();
+
+		int expectedChip = betChip;
+		String expectedSuite = "♠";
+		int expectedNumber = 2;
+
+		int actualChip = player.getHandList().get(1).getChip();
+		String actualSuite = player.getHandList().get(0).getHand().get(0).getSuite();
+		int actualNumber = player.getHandList().get(0).getHand().get(0).getNumber();
+
+		assertThat(actualChip, is(expectedChip));
+		assertThat(actualSuite, is(expectedSuite));
+		assertThat(actualNumber, is(expectedNumber));
+
+	}
+
+	@Test
+	public void calcChipTest() {
+
+		Dealer dealer = new Dealer(decks);
+		for (int i = 0; i < 3; i++) {
+			dealer.draw(decks);
+		}
+
+		player.getHandList().get(0).compareToDealer(dealer.getHand(), false);
+
+		int expected = 102;
+		int actual = player.calcChip();
+
+		assertThat(actual, is(expected));
+
+	}
+
+	@Test
+	public void getGetChipTest() {
+
+		Dealer dealer = new Dealer(decks);
+		for (int i = 0; i < 3; i++) {
+			dealer.draw(decks);
+		}
+
+		player.getHandList().get(0).compareToDealer(dealer.getHand(), false);
+
+		int expected = 2;
+		int actual = player.getGetChip();
 
 		assertThat(actual, is(expected));
 
