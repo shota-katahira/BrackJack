@@ -167,7 +167,7 @@ public class HandTest {
 
 		hand.compareToDealer(dealerHand, true);
 
-		String expected = "Lose";
+		String expected = "Win(NB)";
 		String actual = hand.getResult();
 
 		assertThat(actual, is(expected));
