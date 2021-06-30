@@ -30,12 +30,10 @@ public class StandTest {
 
 		}
 
-		player = new Player(100);
-		player.getHandList().get(0);
-		player.getHandList().get(0).setChip(1);
-		dealer = new Dealer();
 		decks = new Deck();
 		decks.setDeck(deck);
+		player = new Player(100, 1, decks);
+		dealer = new Dealer(decks);
 		gi = new GameInf(player, dealer, decks);
 		stand = new Stand();
 		hit = new Hit();
@@ -43,65 +41,13 @@ public class StandTest {
 	}
 
 	@Test
-	public void doStandTestBust() {
-
-		for (int i = 0; i < 6; i++) {
-			gi = hit.doHit(gi, 0);
-		}
-		gi = stand.doStand(gi);
-
-		String expected = "Win";
-
-		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
-
-		assertThat(actual, is(expected));
-
-	}
-
-	@Test
-	public void doStandTestWin() {
-
-		for (int i = 0; i < 6; i++) {
-			gi = hit.doHit(gi, 0);
-		}
-		gi.getDeck().getDeck().poll();
-		gi = stand.doStand(gi);
-
-		String expected = "Win";
-
-		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
-
-		assertThat(actual, is(expected));
-
-	}
-
-	@Test
-	public void doStandTestDraw() {
-
-		for (int i = 0; i < 6; i++) {
-			gi = hit.doHit(gi, 0);
-		}
-		for (int i = 0; i < 6; i++) {
-			gi.getDeck().getDeck().poll();
-		}
-		gi = stand.doStand(gi);
-
-		String expected = "Draw";
-
-		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
-
-		assertThat(actual, is(expected));
-
-	}
-
-	@Test
-	public void doStandTestLose() {
+	public void doStandTest() {
 
 		gi = stand.doStand(gi);
 
 		String expected = "Lose";
 
-		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
+		String actual = gi.getPlayer().getHandList().get(0).getResult();
 
 		assertThat(actual, is(expected));
 
