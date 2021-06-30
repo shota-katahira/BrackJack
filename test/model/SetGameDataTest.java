@@ -45,8 +45,8 @@ public class SetGameDataTest {
 		user.setPlay(0);
 		user.setChip(10);
 		game = new Game("1", 1, null);
-		player = new Player(10);
 		decks = new Deck();
+		player = new Player(100, 1, decks);
 		hit = new Hit();
 
 		for (int j = 1; j <= 13; j++) {
@@ -60,7 +60,6 @@ public class SetGameDataTest {
 		}
 
 		decks.setDeck(deck);
-		player.firstDraw(decks, 1);
 		gi = new GameInf(player, null, decks);
 
 	}
@@ -91,14 +90,13 @@ public class SetGameDataTest {
 		doNothing().when(gdb).insertGame(game);
 		doNothing().when(udb).updateUserRecord(user);
 
-		player.calcChip(player.getHandList().get(0).getChip());
 		user = sgd.setData(user, player);
 
 		int expectedPlay = 1;
-		int expectedChip = 9;
+		int expectedChip = -1;
 
 		int actualPlay = user.getPlay();
-		int actualChip = player.getChip();
+		int actualChip = player.getGetChip();
 
 		assertThat(actualPlay, is(expectedPlay));
 		assertThat(actualChip, is(expectedChip));
