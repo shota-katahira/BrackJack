@@ -31,7 +31,6 @@ public class SplitTest {
 
 		MockitoAnnotations.initMocks(this);
 
-		player = new Player(100);
 		decks = new Deck();
 
 		for (int j = 1; j <= 13; j++) {
@@ -45,7 +44,7 @@ public class SplitTest {
 		}
 
 		decks.setDeck(deck);
-		player.firstDraw(decks, 1);
+		player = new Player(100, 1, decks);
 		gi = new GameInf(player, null, decks);
 
 	}
