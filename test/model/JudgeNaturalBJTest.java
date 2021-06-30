@@ -20,13 +20,9 @@ public class JudgeNaturalBJTest {
 	@BeforeEach
 	public void setup() {
 
-		player = new Player(100);
-		dealer = new Dealer();
 		decks = new Deck();
 
-		Card card = new Card(0, 8);
-		deck.add(card);
-		card = new Card(0, 1);
+		Card card = new Card(0, 1);
 		deck.add(card);
 		card = new Card(0, 13);
 		deck.add(card);
@@ -34,60 +30,25 @@ public class JudgeNaturalBJTest {
 		deck.add(card);
 		card = new Card(1, 1);
 		deck.add(card);
-		card = new Card(1, 13);
+		card = new Card(1, 7);
 		deck.add(card);
 
 		decks.setDeck(deck);
 
-		gi = new GameInf(player, dealer, decks);
 		jnbj = new JudgeNaturalBJ();
 	}
 
 	@Test
-	public void naturalBJdrawTest() {
+	public void naturalBJTest() {
 
-		decks.getDeck().poll();
-		player.firstDraw(decks, 1);
-		decks.getDeck().poll();
-		dealer.firstDraw(decks);
-
-		gi = jnbj.judge(gi);
-
-		String expected = "Draw";
-		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
-
-		assertThat(actual, is(expected));
-
-	}
-
-	@Test
-	public void naturalBJloseTest() {
-
-		player.firstDraw(decks, 1);
-		decks.getDeck().poll();
-		decks.getDeck().poll();
-		dealer.firstDraw(decks);
+		player = new Player(100, 0, decks);
+		dealer = new Dealer(decks);
+		gi = new GameInf(player, dealer, decks);
 
 		gi = jnbj.judge(gi);
 
-		String expected = "Lose";
-		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
-
-		assertThat(actual, is(expected));
-
-	}
-
-	@Test
-	public void naturalBJwinTest() {
-
-		decks.getDeck().poll();
-		player.firstDraw(decks, 1);
-		dealer.firstDraw(decks);
-
-		gi = jnbj.judge(gi);
-
-		String expected = "Win";
-		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
+		String expected = "Win(NB)";
+		String actual = gi.getPlayer().getHandList().get(0).getResult();
 
 		assertThat(actual, is(expected));
 
@@ -96,14 +57,15 @@ public class JudgeNaturalBJTest {
 	@Test
 	public void nonNaturalBJTest() {
 
-		player.firstDraw(decks, 1);
-		decks.getDeck().poll();
-		dealer.firstDraw(decks);
+		deck.poll();
+		player = new Player(100, 0, decks);
+		dealer = new Dealer(decks);
+		gi = new GameInf(player, dealer, decks);
 
 		gi = jnbj.judge(gi);
 
 		String expected = null;
-		String actual = gi.getPlayer().getHandList().get(0).resultIsNull();
+		String actual = gi.getPlayer().getHandList().get(0).getResult();
 
 		assertThat(actual, is(expected));
 
