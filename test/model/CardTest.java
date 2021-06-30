@@ -61,4 +61,38 @@ public class CardTest {
 
 	}
 
+	@Test
+	public void getCardScoreTest() {
+
+		Card cardA = new Card(0, 1);
+		Card cardJ = new Card(0, 11);
+
+		int expectedA = 1;
+		int expectedJ = 10;
+
+		int actualA = cardA.getCardScore();
+		int actualJ = cardJ.getCardScore();
+
+		assertThat(actualA, is(expectedA));
+		assertThat(actualJ, is(expectedJ));
+
+	}
+
+	@Test
+	public void getAcardScoreTest() {
+
+		Card cardA = new Card(0, 1);
+		Card card2 = new Card(0, 2);
+
+		int expectedA = 11;
+		int expected2 = 2;
+
+		int actualA = cardA.getAcardScore();
+		int actual2 = card2.getAcardScore();
+
+		assertThat(actualA, is(expectedA));
+		assertThat(actual2, is(expected2));
+
+	}
+
 }
